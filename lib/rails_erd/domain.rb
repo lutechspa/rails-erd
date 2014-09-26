@@ -97,7 +97,7 @@ module RailsERD
 
     def relationships_mapping
       @relationships_mapping ||= {}.tap do |mapping|
-        relationships.each do |relationship|
+        relationships.collect{|e| e if e.destination}.compact.each do |relationship|
           (mapping[relationship.source.name] ||= []) << relationship
           (mapping[relationship.destination.name] ||= []) << relationship
         end
@@ -106,7 +106,7 @@ module RailsERD
 
     def specializations_mapping
       @specializations_mapping ||= {}.tap do |mapping|
-        specializations.each do |specialization|
+        specializations.each do |specialization|    
           (mapping[specialization.generalized.name] ||= []) << specialization
           (mapping[specialization.specialized.name] ||= []) << specialization
         end
